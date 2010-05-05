@@ -2,7 +2,7 @@ $:.unshift(File.dirname(__FILE__)) unless
   $:.include?(File.dirname(__FILE__)) || $:.include?(File.expand_path(File.dirname(__FILE__)))
   
 require 'rubygems'
-gem 'dm-core', '>=0.9.5'
+gem 'dm-core', '>=0.10.2'
 require 'dm-core'
 
 module DataMapper
@@ -10,7 +10,7 @@ module DataMapper
   end
   
   module DmOptlock
-    VERSION = '0.1.4'
+    VERSION = '0.1.6'
     DEFAULT_LOCKING_COLUMN = :lock_version
    
     def self.included(base) #:nodoc:

@@ -12,7 +12,7 @@ add_locking_column takes a options hash just like DataMapper’s property method
 
 == REQUIREMENTS:
 
-* dm-core >= 0.9.5
+* dm-core >= 0.10.2
 
 == LICENSE:
 GPL v3

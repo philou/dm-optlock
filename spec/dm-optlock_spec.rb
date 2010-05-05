@@ -7,7 +7,7 @@ if HAS_SQLITE3 || HAS_MYSQL || HAS_POSTGRES
     before :all do
       class Thing
         include DataMapper::Resource
-        property :id, Integer, :serial => true
+        property :id, Serial
         property :name, String
         
         add_locking_column :row_version
@@ -54,15 +54,15 @@ if HAS_SQLITE3 || HAS_MYSQL || HAS_POSTGRES
     it "'s version column should be not nullable, have default 0 and a protected writer" do
      class Foo
         include DataMapper::Resource
-        property :id, Integer, :serial => true
+        property :id, Serial
        
-        add_locking_column :foo_version, :default => 1, :nullable => false
+        add_locking_column :foo_version, :default => 1, :required => true
 
         auto_migrate!(:default)
       end
       
       col = Foo.properties[:foo_version]
-      col.nullable?.should be_false
+      col.allow_nil?.should be_false
       col.default.should be(0)
       col.writer_visibility.should equal(:protected)
     end

@@ -21,14 +21,14 @@ module DataMapper
     private
     # Checks if the row has been changed since being loaded from the database.
     def check_lock_version
-      if !new_record? && dirty? && respond_to?(self.class.locking_column.to_s)
-        if original_values.include?(:id)
-          row = self.class.get(original_values[:id]) 
+      if !new? && dirty? && respond_to?(self.class.locking_column.to_s)
+        if self.respond_to?(:id) && original_attributes.include?(properties[:id])
+          row = self.class.get(original_attributes[properties[:id]]) 
         else
           row = self.class.get(id)
         end
         if !row.nil? && row.attribute_get(self.class.locking_column) != attribute_get(self.class.locking_column)
-          attributes = original_values
+          attributes = original_attributes
           raise DataMapper::StaleObjectError
         else
           attribute_set(self.class.locking_column, attribute_get(self.class.locking_column) + 1)
@@ -53,5 +53,5 @@ module DataMapper
     end
   end
   
-  Resource::append_inclusions DmOptlock
+  Model::append_inclusions DmOptlock
 end
